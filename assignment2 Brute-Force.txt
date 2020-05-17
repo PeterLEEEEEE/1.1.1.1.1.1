@@ -1,0 +1,46 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+
+
+
+void BFS(int ran[], int n) // brute-force and sort
+{
+	int temp;
+	for (int i = 0; i < n - 1; i++)
+	{
+		for (int j = 1; j < n-i; j++)
+		{
+			if (ran[j - 1] > ran[j])
+			{
+				temp = ran[j - 1];
+				ran[j - 1] = ran[j];
+				ran[j] = temp;
+			}
+
+		}
+	}
+
+}
+
+
+
+
+int main()
+{
+	int random[10];
+	int x, i, j;
+	int swap;
+	for (x = 0; x < 10; x++) // make array out of random function
+	{
+		random[x] = 1 + rand() % 10;
+	}
+
+	BFS(random, 10);
+
+	for (x = 0; x < 10; x++)
+	{
+		printf("%d ", random[x]);
+	}
+	return 0;
+}

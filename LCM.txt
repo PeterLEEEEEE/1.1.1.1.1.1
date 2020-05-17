@@ -1,0 +1,36 @@
+#include <stdio.h>
+
+int main() {
+	
+int a,b,min;
+	
+int x,mul;
+	
+	
+	
+scanf("%d %d", &a, &b);
+	
+	
+for(x=1; ;x++)
+	
+{
+		
+mul = a*x;   // a의 배수 구하기
+	 
+ 	if(mul % b == 0)
+		
+	{
+			
+	min = mul;
+			
+	break;
+		
+	}	
+	
+}	
+	
+printf("%d", min);
+	
+
+return 0;
+}

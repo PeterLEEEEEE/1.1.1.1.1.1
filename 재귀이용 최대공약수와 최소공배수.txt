@@ -1,0 +1,28 @@
+#include <stdio.h> // 재귀이용 최소공배수와 최대공약수 구하기
+int GCD(int x, int y)
+{
+	
+
+		if (y == 0) return x;
+
+		else return GCD(y, x%y);
+
+	}
+
+int LCM(int x, int y)
+	{
+
+		return x * y / GCD(x, y); // 두 수의 곱 / 두 수의 최대공약수 = 최소 공배수!
+
+	}
+
+
+int main() {
+	// 48(y) % 14(x) == 6(x) 14(y) % 6(x) = x(x)
+	// x가 0일떄 y가 값이다
+	int a, b;
+	scanf("%d %d", &a, &b);
+	printf("%d \n", GCD(a, b));
+	printf("%d", LCM(a, b));
+	return 0;
+}

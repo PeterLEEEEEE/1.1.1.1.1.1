@@ -1,0 +1,26 @@
+// LCS
+#include<iostream>
+#include<string>
+#include<algorithm>
+using namespace std;
+
+
+int LCS[100][100];
+string X = "ABCBDAB";
+string Y = "BDCABA";
+
+int main() {
+	int N = X.length();
+	int M = Y.length();
+
+	for (int y = 1; y <= N; y++) {
+		for (int x = 1; x <= M; x++) {
+			if (X[y-1] == Y[x-1]) {
+				LCS[y][x] = LCS[y - 1][x - 1] + 1;
+			}
+			else LCS[y][x] = max(LCS[y - 1][x], LCS[y][x - 1]);
+		}
+	}
+	cout << LCS[N][M];
+	return 0;
+}

@@ -1,0 +1,114 @@
+#include<stdio.h>
+
+
+
+#define LEN 10        // 스택의 길이
+#define TRUE 1        
+#define FALSE 0
+
+typedef int Data;    // 데이터형(가변성)                              
+
+// 스택 구조체
+typedef struct array_stack {
+	Data Stop[LEN];
+	
+	int top;
+} array_stack;
+
+// 스택 명명 변환
+typedef array_stack Stack;
+
+Stack stack1, stack2;
+
+// 스택 초기 설정
+void stack_init(Stack *pstack1, Stack *pstack2) {
+	pstack1->top = -1;
+	pstack2->top = -1;
+}
+// 빈 스택 확인
+int IsEmpty(Stack *pstack) {
+	if (pstack->top == -1)
+		return TRUE;
+	else
+		return FALSE;
+}
+
+// 데이터 삽입
+void Push(Stack *pstack, Data Data) {
+	pstack->top += 1;
+	pstack->Stop[pstack->top] = Data;
+}
+
+// 데이터 삭제
+Data Pop(Stack *pstack) {
+	int rIdx;
+
+	if (IsEmpty(pstack)) {
+		printf("memory error!");
+		exit(-1);
+	}
+	rIdx = pstack->top; // 삭제할 데이터가 있는 인덱스 값 저장
+	printf("POP(%d)", *pstack); // 잘 모르겠음
+
+	pstack->top -= 1;
+
+	return pstack->Stop[rIdx]; // 삭제되는 데이터 반환
+	
+}
+
+// top index의 데이터 확인
+Data peek(Stack *pstack) {
+	if (IsEmpty(pstack)) {
+		printf("memory error!");
+		return; //exit(-1);
+	}
+
+	return pstack->Stop[pstack->top]; //맨 위에 저장된 데이터 반환
+}
+
+// stack 저장값 출력
+void print(Stack *pstack) {
+	int i;
+	if (IsEmpty == TRUE) {
+		printf("memory error!");
+		exit(-1);
+	}
+
+	for (i = 0; i < (pstack->top) + 1; i++) {
+		printf("%d\n", pstack->Stop[i]);
+	}
+}
+void IN(char x) //열차 진입
+{
+	printf("IN(%c)", x);
+	
+	if (x >= 5)
+		Push(&stack2, x); // 5 이상은 스택2에 푸시
+	else
+		Push(&stack1, x); // 4 이하는 스택1에 푸시
+}
+
+void OUT(char x) // 열차 출구
+{
+	printf("%c번 열차 OUT", x);
+}
+int main() {
+	
+	stack_init(&stack1, &stack2);
+	char train[10];
+	
+	scanf("%s", train);
+	
+	for (int i = 0; i < 10; i++)
+	{
+		
+		if (train[i] == 1)
+		{
+			OUT(i);
+		}
+		
+		else IN(train[i]);
+		
+	}
+
+}

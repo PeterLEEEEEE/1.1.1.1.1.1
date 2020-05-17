@@ -1,0 +1,29 @@
+#include<iostream>
+using namespace std;
+
+int arr[10] = { 1,1,2,5,6,9,9,15,16,19 };
+int target = 16;
+
+void run(int level, int start, int end) {
+	int mid = (start + end) / 2;
+
+	if (arr[mid] == target) {
+		cout << "¹ß°ß";
+		return;
+		
+	}
+	if (arr[mid] < target) {
+		run(level + 1, mid + 1, end);
+	}
+	else {
+		run(level + 1, mid, end - 1);
+	}
+}
+
+
+int main() {
+
+	run(0, 0, 9);
+
+	return 0;
+}

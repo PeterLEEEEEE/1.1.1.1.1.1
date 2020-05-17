@@ -1,0 +1,248 @@
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+
+struct Input { // monthly deposit & terms
+
+	double sum;
+};
+
+void sort(Input User[]) { //sorting interest into descending order
+	float temp;
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 9; j++) {
+			if (User[j].sum < User[j + 1].sum) {
+				temp = User[j].sum;
+				User[j].sum = User[j + 1].sum;
+				User[j + 1].sum = temp;
+			}
+		}
+	}
+	cout << "\n\nBest Interest rate for you is " << User[0].sum << "\n\n";
+}
+
+
+
+double Compound(double rate, int month, int amount) { // Calculating Compound interest rate
+	double CIR = 0;
+	for (int i = 0; i < month; i++) {
+		CIR += (double)amount*pow(1 + rate/12, month);
+	}
+	return CIR;
+}
+
+
+
+double Cal(double highrate, int month, int amount) { // Interest Calculator 
+	double SIR = 0; // Simple interest rate 
+	for (int i = 0; i < month; i++) {
+		SIR += (double)amount*(1+(highrate/12)*month);
+	}
+	return SIR;
+}
+
+double IBK(int amount, int month) { // Bank 
+
+	double rate; // Interest Rate
+	if (month >= 12 && month < 24) { // check the range of the possible period
+		rate = 0.015; // rate changes by the period
+		cout << "IBK: " << Cal(rate, month, amount) << "\n";
+		return Cal(rate, month, amount);
+	}
+	else if (month >= 24) {
+		rate = 0.0175;
+		cout << "IBK: " << Compound(rate, month, amount) << "\n";
+		return Compound(rate, month, amount);
+	}
+
+
+
+}
+double Woori(int amount, int month) {
+
+	double rate;
+
+
+	if (month >= 12 && month < 24) {
+		rate = 0.0250;
+		cout << "Woori: " << Cal(rate, month, amount) << "\n";
+		return Cal(rate, month, amount);
+	}
+	else if (month >= 24) {
+		rate = 0.0260;
+		cout << "Woori: " << Compound(rate, month, amount) << "\n";
+		return Compound(rate, month, amount);
+	}
+
+}
+double KB(int amount, int month) {
+
+	double rate; // Interest Rate
+
+	if (month >= 12 && month < 24) {
+		rate = 0.0165;
+		cout << "KB: " << Cal(rate, month, amount) << "\n";
+		return Cal(rate, month, amount);
+	}
+
+	else if (month >= 24) {
+		rate = 0.0215;
+		cout << "KB: " << Compound(rate, month, amount) << "\n";
+		return Compound(rate, month, amount);
+	}
+
+
+}
+double NH(int amount, int month) {
+
+	double rate;
+
+	if (month >= 12 && month < 24) {
+		rate = 0.0243;
+		cout << "NH: " << Cal(rate, month, amount) << "\n";
+		return Cal(rate, month, amount);
+	}
+	else if (month >= 24) {
+		rate = 0.0247;
+		cout << "NH: " << Compound(rate, month, amount) << "\n";
+		return Compound(rate, month, amount);
+	}
+
+
+
+}
+double SH(int amount, int month) {
+
+	if (month >= 12 && month < 24) {
+		double rate = 0.022;
+		cout << "SH: " << Cal(rate, month, amount) << "\n";
+		return Cal(rate, month, amount);
+	}
+	if (month >= 24) {
+		double rate = 0.023;
+		cout << "SH: " << Compound(rate, month, amount) << "\n";
+		return Compound(rate, month, amount);
+	}
+
+
+
+}
+double Citi(int amount, int month) {
+
+	double rate;
+
+	if (month >= 12 && month < 24) {
+		rate = 0.015;
+		cout << "Citi: " << Cal(rate, month, amount) << "\n";
+		return Cal(rate, month, amount);
+	}
+	else if (month >= 24) {
+		rate = 0.016;
+		cout << "Citi: " << Compound(rate, month, amount) << "\n";
+		return Compound(rate, month, amount);
+	}
+
+}
+double KN(int amount, int month) {
+
+	double rate;
+
+	if (month >= 12 && month < 24) {
+		rate = 0.018;
+		cout << "KN: " << Cal(rate, month, amount) << "\n";
+		return Cal(rate, month, amount);
+	}
+	else if (month >= 24) {
+		rate = 0.022;
+		cout << "IBK: " << Compound(rate, month, amount) << "\n";
+		return Compound(rate, month, amount);
+	}
+
+
+}
+double Kbank(int amount, int month) {
+
+	double rate;
+
+	if (month >= 24) {
+		rate = 0.030;
+		cout << "Kbank: " << Compound(rate, month, amount) << "\n";
+		return Compound(rate, month, amount);
+	}
+	else if (month >= 12 && month < 24) {
+		rate = 0.028;
+		cout << "Kbank: " << Cal(rate, month, amount) << "\n";
+		return Cal(rate, month, amount);
+	}
+
+}
+double KEB(int amount, int month) {
+
+	float rate;
+
+	if (month >= 24) {
+		rate = 0.0205;
+		cout << "KEB: " << Compound(rate, month, amount) << "\n";
+		return Compound(rate, month, amount);
+	}
+	else if (month >= 12 && month < 24) {
+		rate = 0.0185;
+		cout << "KEB: " << Cal(rate, month, amount) << "\n";
+		return Cal(rate, month, amount);
+	}
+
+}
+double SC(int amount, int month) {
+
+	double rate;
+
+
+	if (month >= 12 && month < 24) {
+		rate = 0.017;
+		cout << "SC: " << Cal(rate, month, amount) << "\n";
+		return Cal(rate, month, amount);
+	}
+
+	else if (month >= 24) {
+		rate = 0.019;
+		cout << "SC: " << Compound(rate, month, amount) << "\n";
+		return Compound(rate, month, amount);
+	}
+
+}
+int main() {
+	Input User[10];
+	int t = 1;
+	int amount, month;
+	cout << "Insert your amount and month" << "\n\n";
+	cout << "Amount: ";
+	cin >> amount;
+	cout << "month: ";
+	cin >> month;
+	cout << "\n\n";
+
+	User[0].sum = KB(amount, month);
+	User[1].sum = Woori(amount, month);
+	User[2].sum = IBK(amount, month);
+	User[3].sum = NH(amount, month);
+	User[4].sum = SH(amount, month);
+	User[5].sum = KEB(amount, month);
+	User[6].sum = Citi(amount, month);
+	User[7].sum = KN(amount, month);
+	User[8].sum = Kbank(amount, month);
+	User[9].sum = SC(amount, month);
+
+	sort(User); //sorting amount of interest 
+
+	for (int i = 0; i < 10; i++) {
+		cout << t << ": " << User[i].sum << "\n";
+		t++;
+	}
+
+
+
+	return 0;
+}
+// 복리 : S = 원금(1+이율)^기간 (a(1+r)^n)
+// 단리 : S = a(1+rn)

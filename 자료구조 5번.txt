@@ -1,0 +1,266 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define SIZE 1000   
+
+
+typedef struct _student 
+{
+	int studentnum;
+	char name[11];
+	int PhoneNum;
+}student;
+
+void Random(student* students, int num) 
+{
+	srand((unsigned int)time(NULL));
+	int i;
+	for (i = 0; i < num; i++) 
+	{
+		students[i].studentnum = 200000000 + ((rand() % 7) + 13) * 100000 + (rand() % 100) * 100 + (rand() % 100);
+		int j;
+		for (j = 0; j < 10; j++) students[i].name[j] = (char)((rand() % 26) + 'A');
+		students[i].name[j] = '\0';
+		students[i].PhoneNum = (rand() % 10000) * 10000 + (rand() % 10000);
+	}
+}
+
+
+void copy_student(student* to, student* from) 
+{
+	to->studentnum = from->studentnum;
+	for (int i = 0; i <= 10; i++) to->name[i] = from->name[i];
+	to->PhoneNum = from->PhoneNum;
+}
+void copy_students(student * to, student * from, int num) 
+{
+	for (int i = 0; i < num; i++) 
+	{
+		copy_student(&to[i], &from[i]);
+	};
+}
+
+void swap_student(student* a, student* b) 
+{
+	student tmp;
+	copy_student(&tmp, a);
+	copy_student(a, b);
+	copy_student(b, &tmp);
+}
+
+void print_students(student * s, int num) 
+{
+
+	
+	printf("%10s\t%10s\t%11s\n", "Student Num", "Name", "Phone");
+
+	for (int i = 0; i < num; i++) {
+		printf("%10d\t%10s\t010%08d\n", s[i].studentnum, s[i].name, s[i].PhoneNum);
+	}
+	
+}
+
+
+//mode가 1일때 학번기준   0일때 이름기준 으로 정렬
+void selection_sort(student* s, int num, int mode) 
+{
+	for (int i = 0; i < num; i++) 
+	{
+		int min_idx = i;
+
+		if (mode) 
+		{
+			for (int j = i; j < num; j++)
+			{
+				if (s[min_idx].studentnum > s[j].studentnum) min_idx = j;
+			}
+		}
+		else 
+		{
+			for (int j = i; j < num; j++) 
+			{
+				if (strcmp(s[min_idx].name, s[j].name) == 1) min_idx = j;
+			}
+		}
+
+		swap_student(&s[i], &s[min_idx]);
+	}
+}
+
+int quick_partition(student* s, int left, int right, int mode) 
+{
+	int pivot = left;
+	int l = left + 1;
+	int r = right;
+	while (l <= r) 
+	{
+		if (mode) 
+		{
+			while (s[pivot].studentnum >= s[l].studentnum && l <= right) 
+			{
+				l++;
+			}
+			while (s[pivot].studentnum <= s[r].studentnum && r >= left + 1) 
+			{
+				r--;
+			}
+		}
+		else 
+		{
+			while (strcmp(s[pivot].name, s[l].name) >= 0 && l <= right) 
+			{
+				l++;
+			}
+			while (strcmp(s[pivot].name, s[r].name) <= 0 && r >= left + 1) 
+			{
+				r--;
+			}
+		}
+		if (l <= r) 
+		{
+			swap_student(&s[l], &s[r]);
+		}
+	}
+	swap_student(&s[left], &s[r]);
+	return r;
+}
+
+void quick_sort(student* s, int left, int right, int mode) 
+{
+	if (left <= right)
+	{
+		int pivot = quick_partition(s, left, right, mode);
+		quick_sort(s, left, pivot - 1, mode);
+		quick_sort(s, pivot + 1, right, mode);
+	}
+}
+
+void make_heap(student *s, int num, int mode) 
+{
+	for (int i = 1; i < num; i++) 
+	{
+		int child = i;
+		while (child > 0) 
+		{
+			int root = (child - 1) / 2;
+			if (mode) 
+			{
+				if (s[root].studentnum < s[child].studentnum)
+				{
+					swap_student(&s[root], &s[child]);
+				}
+			}
+			else 
+			{
+				if (strcmp(s[root].name, s[child].name) == -1) 
+				{
+					swap_student(&s[root], &s[child]);
+				}
+			}
+			child = root;
+		}
+	}
+}
+
+void heap_sort(student *s, int num, int mode) 
+{
+	make_heap(s, num, mode);
+	for (int i = num - 1; i >= 0; i--) 
+	{
+		int cur = 0;
+		swap_student(&s[i], &s[cur]);
+		while ((cur + 1) * 2 < i) 
+		{
+			int child = ((cur + 1) * 2) - 1;
+			if (mode) 
+			{
+				if (s[child].studentnum < s[child + 1].studentnum)
+					child++;
+				if (s[cur].studentnum >= s[child].studentnum)
+					break;
+			}
+			else 
+			{
+				if (strcmp(s[child].name, s[child + 1].name) == -1)
+					child++;
+				if (strcmp(s[cur].name, s[child].name) >= 0)
+					break;
+			}
+			swap_student(&s[cur], &s[child]);
+			cur = child;
+		}
+	}
+}
+
+student copy_data[SIZE];
+student students[SIZE];
+float running_time1[3]; //selection, quick, heap순서 학번정렬
+float running_time2[3]; //selection, quick, heap순서 이름정렬
+
+void Selection_Sort() 
+{
+	printf("\n\nSelection Sort\n");
+	copy_students(copy_data, students, SIZE);
+	clock_t s1 = clock();
+	selection_sort(copy_data, SIZE, 1);
+	running_time1[0] = (float)(clock() - s1) / CLOCKS_PER_SEC;
+	print_students(copy_data, SIZE);
+	clock_t s2 = clock();
+	selection_sort(copy_data, SIZE, 0);
+	running_time2[0] = (float)(clock() - s2) / CLOCKS_PER_SEC;
+	print_students(copy_data, SIZE);
+}
+
+void QSort() 
+{
+	printf("\n\nQuick Sort\n");
+	copy_students(copy_data, students, SIZE);
+	clock_t s1 = clock();
+	quick_sort(copy_data, 0, SIZE - 1, 1);
+	running_time1[1] = (float)(clock() - s1) / CLOCKS_PER_SEC;
+	print_students(copy_data, SIZE);
+
+	clock_t s2 = clock();
+	quick_sort(copy_data, 0, SIZE - 1, 0);
+	running_time2[1] = (float)(clock() - s2) / CLOCKS_PER_SEC;
+
+	print_students(copy_data, SIZE);
+}
+
+void Heap_() 
+{
+	printf("\n\nHeap Sort\n");
+	copy_students(copy_data, students, SIZE);
+	clock_t s1 = clock();
+	heap_sort(copy_data, SIZE, 1);
+	running_time1[2] = (float)(clock() - s1) / CLOCKS_PER_SEC;
+	print_students(copy_data, SIZE);
+
+	clock_t s2 = clock();
+	heap_sort(copy_data, SIZE, 0);
+	running_time2[2] = (float)(clock() - s2) / CLOCKS_PER_SEC;
+
+	print_students(copy_data, SIZE);
+}
+
+
+
+int main()
+{
+	Random(students, SIZE);
+	
+	print_students(students, SIZE);
+
+	Selection_Sort();
+	QSort();
+	Heap_();
+
+	printf("\n\n학번 정렬 : \n");
+	printf("selection sort\t:\t%f(sec)\nquick sort\t:\t%f(sec)\nheap sort\t:\t%f(sec)\n", running_time1[0], running_time1[1], running_time1[2]);
+	printf("\n이름 정렬 : \n");
+	printf("selection sort\t:\t%f(sec)\nquick sort\t:\t%f(sec)\nheap sort\t:\t%f(sec)\n", running_time2[0], running_time2[1], running_time2[2]);
+
+	return 0;
+}

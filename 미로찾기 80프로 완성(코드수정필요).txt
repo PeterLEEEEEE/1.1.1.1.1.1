@@ -1,0 +1,157 @@
+#include <stdio.h> 
+#include <stdlib.h> 
+
+#define MAX_SIZE 30 
+#define MAZE_SIZE 25
+
+typedef struct Pos {
+	short x;
+	short y;
+}Pos;
+
+typedef struct Stack
+{
+	Pos data[MAX_SIZE];
+	int top;
+
+}Stack;
+
+char maze[MAZE_SIZE][MAZE_SIZE] = {         // 가로 9, 세로 12칸의 미로
+	"XXXXXXXXXXXXXXXXXXX",  //0
+	"XS000000X0000000X0X",  //1    
+	"X0XXXXX0XXXXX0X0X0X",//2
+	"X00000X0X00000X0X0X",//3
+	"XXXXX0X0X0XXX0X0X0X",//4
+	"X00000X000X000X0X0X",//5
+	"X0XXX0XXXXX0XXX0X0X",//6
+	"X0X0X0X0X0X0X000X0X",//7
+	"X0X0XXX0X0XXX0XXX0X",//8
+	"X0X0X000X00000X000X",//9
+	"X0X0X0X0XXXXXXX0XXX",//10
+	"X000X0X000000000X0X",//11
+	"X0XXX0X0XXXXXXXXX0X",//12
+	"X00000X0X00000X000X",//13
+	"XXXXXXX0X0XXXXX0X0X",//14
+	"X0X00000X0X00000X0X",//15
+	"X0X0XXXXX0X0XXXXXXX",//16
+	"X0X0000000X0000000X",//17
+	"X0XXXXX0XXXXX0XXX0X",//18
+	"X00000X000X000X0X0X",//19
+	"X0XXX0X0X0X0XXX0X0X",//20
+	"X000X0X0X0X00000X0X",//21
+	"XXX0X0X0X0X0XXXXX0X",//22
+	"X000X000X000X0000EX",//23
+	"XXXXXXXXXXXXXXXXXXX" //24
+};//가로 19칸  
+
+
+void Init(Stack *p)
+{
+	p->top = -1;
+}
+
+int Is_full(Stack *p)
+{
+	return p->top == MAX_SIZE - 1;
+}
+
+int Is_empty(Stack *p)
+{
+	return p->top == -1;
+}
+
+void Push(Stack *p, Pos data)
+{
+	if (Is_full(p))
+	{
+		return;
+	}
+	else
+	{
+		p->top++;
+		p->data[p->top].x = data.x;
+		p->data[p->top].y = data.y;
+
+	}
+}
+
+Pos Pop(Stack *p)
+{
+	if (Is_empty(p))
+	{
+
+		exit(1);
+	}
+
+	return p->data[(p->top)--];
+}
+
+void Push_Loc(Stack *s, int x, int y)
+{
+	if (x < 1 || y < 1 || x > MAZE_SIZE - 1 || y > MAZE_SIZE - 1) return;
+
+	if (maze[x][y] != 'X' && maze[x][y] != '.')
+	{
+		Pos tmp;
+		tmp.x = x;
+		tmp.y = y;
+
+
+
+		Push(s, tmp);
+		printf("push(%d,%d) \n", tmp.x, tmp.y);
+	}
+}
+
+int main()
+{
+	Stack s;
+	Pos here;
+	int i, j, x, y;
+
+	Init(&s);
+
+	// 시작점 구하기 
+	for (i = 0; i < MAZE_SIZE; i++)
+	{
+		for (j = 0; j < MAZE_SIZE; j++)
+		{
+			if (maze[i][j] == 'S')
+			{
+				here.x = i;
+				here.y = j;
+			}
+		}
+	}
+
+
+	printf("시작 점 (%d,%d) \n", here.x, here.y);
+
+	while (maze[here.x][here.y] != 'E')
+	{
+		x = here.x;
+		y = here.y;
+
+		maze[x][y] = '.'; // 방문한 곳을 표시 
+
+		// 좌,우,위,아래(우,아래,좌,위)중 이동 가능한 곳을 탐색 
+		Push_Loc(&s, x - 1, y);
+		Push_Loc(&s, x, y - 1);
+		Push_Loc(&s, x + 1, y);
+		Push_Loc(&s, x, y + 1);
+
+		if (Is_empty(&s))
+		{
+			printf("실패\n");
+			return 0;
+		}
+		else
+		{
+			here = Pop(&s); // 현재 좌표를 변경 
+			printf("pop(%d,%d)\n", here.x, here.y);
+		}
+	}
+
+	printf("도착 점 (%d,%d)\n", here.x, here.y);
+	printf("탐색 성공\n");
+}

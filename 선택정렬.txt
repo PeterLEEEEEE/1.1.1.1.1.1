@@ -1,0 +1,29 @@
+#include<stdio.h>
+
+int main()
+{
+	int data[10];
+	int temp;
+	int y, x;
+	for (x = 0; x < 6; x++)
+	{
+		scanf("%d", &data[x]);
+	}
+		for (y = 0; y < 6; y++)
+	{
+		for (x = y + 1; x < 6; x++)
+		{
+			if (data[y] > data[x])
+			{
+				temp = data[y];
+				data[y] = data[x];
+				data[x] = temp;
+			}
+		}
+	}
+	for (x = 0; x < 6; x++)
+	{
+		printf("%d", data[x]);
+	}
+	return 0;
+}

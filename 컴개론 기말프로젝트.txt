@@ -1,0 +1,321 @@
+#include <stdio.h>
+
+typedef struct Input { // monthly deposit & terms
+
+	int month;
+	int amount;
+};
+
+
+
+void Cal(float highrate, Input *Useraddr) { // Interest Calculator 
+	float SIR = 0; // Simple interest rate 
+	for (int i = 0; i < Useraddr->month + 1; i++) { 
+		SIR += (float)(Useraddr->amount * highrate); 
+	}
+	printf("accrued interest is %.4f \n", SIR);
+}
+
+void IBK(Input* User) { // Bank 
+	printf("The deposit period is at least 6 months and a maximum of 1 year. \n"); // Informations of the product
+	printf("Sign up only through Internet banking \n");
+	float rate; // Interest Rate
+	if (User->amount >= 1000 && User->amount <= 1000000) { // check the range of the possible amount
+		if (User->month >= 6 && User->month < 12) { // check the range of the possible period
+			rate = 0.015; // rate changes by the period
+			Cal(rate, User);
+		}
+		else if (User->month == 12) {
+			rate = 0.0175;
+			Cal(rate, User);
+		}
+		else {
+			printf("Exceeded period range \n"); // if period is not in range print this
+		}
+	}
+	else {
+		printf("Exceeded amount range \n"); // if amount is not in range print this
+	}
+}
+void Woori(Input* User) {
+	printf("The deposit period is 1, 2, 3 year term \n");
+	printf("For Age 18 to 30 Only \n");
+	float rate;
+	if (User->amount >= 200000) {
+		if (User->month == 36) {
+			rate = 0.027;
+			Cal(rate, User);
+		}
+		else if (User->month == 12) {
+			rate = 0.0250;
+			Cal(rate, User);
+		}
+		else if (User->month == 24) {
+			rate = 0.0260;
+			Cal(rate, User);
+		}
+		else {
+			printf("Exceeded period range \n");
+		}
+	}
+	else {
+		printf("Exceeded amount range \n");
+	}
+}
+void KB(Input *User) { 
+	printf("The deposit period is at least 6 months and a maximum of 3 year \n"); // Information
+	printf("Sign up only through Mobile banking \n");
+	float rate; // Interest Rate
+	if (User->amount >= 10000) {
+		if (User->month >= 6 && User->month < 12) {
+			rate = 0.0165;
+			Cal(rate, User);
+		}
+		else if (User->month >= 12 && User->month < 24) {
+			rate = 0.0205;
+			Cal(rate, User);
+		}
+		else if (User->month >= 24 && User->month < 36) {
+			rate = 0.0215;
+			Cal(rate, User);
+		}
+		else if (User->month == 36) {
+			rate = 0.0235;
+			Cal(rate, User);
+		}
+		else {
+			printf("Exceeded period range \n");
+		}
+	}
+	else {
+		printf("Exceeded amount range \n");
+	}
+}
+void NH(Input* User) {
+	printf("The deposit period is at least 1 year and a maximum of 3 year \n");
+	printf("Sign up only through Internet, and Mobile banking \n");
+	float rate;
+	if (User->amount >= 20000000) {
+		if (User->month >= 12 && User->month <= 23) {
+			rate = 0.0243;
+			Cal(rate, User);
+		}
+		else if (User->month >= 24 && User->month <= 35) {
+			rate = 0.0247;
+			Cal(rate, User);
+		}
+		else if (User->month == 36) {
+			rate = 0.0256;
+			Cal(rate, User);
+		}
+		else {
+			printf("Exceeded period range \n");
+		}
+	}
+	else {
+		printf("Exceeded amount range \n");
+	}
+}
+void SH(Input* User) {
+	printf("The deposit period is 1 year \n");
+	printf("Sign up only through Mobile banking \n");
+	if (User->amount >= 1000 && User->amount <= 1000000) {
+		if (User->month == 12) {
+			float rate = 0.022;
+			Cal(rate, User);
+		}
+		else {
+			printf("Exceeded period range \n");
+		}
+	}
+	else {
+		printf("Exceeded amount range \n");
+	}
+
+
+}
+void Citi(Input* User) {
+	printf("The deposit period is at least 1 year and a maximum of 3 year \n");
+	printf("Sign up only through Internet banking \n");
+	float rate;
+	if (User->amount >= 10000 && User->amount <= 10000000) { 
+		if (User->month >= 12 && User->month < 24) {
+			rate = 0.015;
+			Cal(rate, User);
+		}
+		else if (User->month >= 24 && User->month < 36) {
+			rate = 0.016;
+			Cal(rate, User);
+		}
+		else if (User->month == 36) {
+			rate = 0.017;
+			Cal(rate, User);
+		}
+		else {
+			printf("Exceeded period range \n");
+		}
+	}
+	else {
+		printf("Exceeded amount range \n");
+	}
+}
+void KN(Input* User) {
+	printf("The deposit period is at least 6 months and a maximum of 2 year \n ");
+	printf("Sign up only through Mobile banking \n");
+	float rate;
+	if (User->amount >= 10000 && User->amount <= 3000000) {
+		if (User->month >= 6 && User->month < 12) {
+			rate = 0.018;
+			Cal(rate, User);
+		}
+		else if (User->month >= 12 && User->month < 24) {
+			rate = 0.022;
+			Cal(rate, User);
+		}
+		else if (User->month == 24) {
+			rate = 0.023;
+			Cal(rate, User);
+		}
+		else {
+			printf("Exceeded period range \n");
+		}
+	}
+	else {
+		printf("Exceeded amount range \n");
+	}
+
+}
+void Kbank(Input* User) {
+	printf("The deposit period is at least 1 year and a maximum of 3 year \n");
+	printf("Sign up only through Internet, and Mobile banking \n");
+	float rate;
+	if (User->amount >= 10000 && User->amount <= 300000) {
+		if (User->month == 36) {
+			rate = 0.030;
+			Cal(rate, User);
+		}
+		else if (User->month == 12) {
+			rate = 0.028;
+			Cal(rate, User);
+		}
+		else if (User->month == 24) {
+			rate = 0.029;
+			Cal(rate, User);
+		}
+		else {
+			printf("Exceeded period range \n");
+		}
+	}
+	else {
+		printf("Exceeded amount range \n");
+	}
+}
+void KEB(Input* User) {
+	printf("The deposit period is at least 1, 2, 3, and 5 year term \n");
+	float rate;
+	if (User->amount >= 1000 && User->amount <= 5000000) {
+		if (User->month == 36) {
+			rate = 0.0205;
+			Cal(rate, User);
+		}
+		else if (User->month == 12) {
+			rate = 0.0185;
+			Cal(rate, User);
+		}
+		else if (User->month == 24) {
+			rate = 0.0195;
+			Cal(rate, User);
+		}
+		else if (User->month == 60) {
+			rate = 0.0215;
+		}
+		else {
+			printf("Exceeded period range \n");
+		}
+	}
+	else {
+		printf("Exceeded amount range \n");
+	}
+}
+void SC(Input* User) {
+	printf("The deposit period is at least 6 months and a maximum of 5 year \n");
+	printf("Sign up through Bank or Internet banking \n");
+	float rate;
+	if (User->amount >= 100000) {
+		if (User->month >= 6 && User->month < 12) {
+			rate = 0.015;
+			Cal(rate, User);
+		}
+		else if (User->month >= 12 && User->month < 24) {
+			rate = 0.017;
+			Cal(rate, User);
+		}
+		else if (User->month >= 24 && User->month < 36) {
+			rate = 0.018;
+			Cal(rate, User);
+		}
+		else if (User->month >= 36 && User->month <= 60) {
+			rate = 0.019;
+			Cal(rate, User);
+		}
+		else {
+			printf("Exceeded period range \n");
+		}
+	}
+	else {
+		printf("Exceeded amount range \n");
+	}
+}
+int main() {
+	Input User;
+
+
+	int banknum;
+	printf("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
+	printf("----------Enter the Period and Monthly Amount------------\n\n");
+	printf("Period: ");
+	scanf("%d", &User.month);
+	printf("Monthly Amount: ");
+	scanf("%d", &User.amount);
+	printf("\n-----------Enter the following numbers to search----------- \n");
+	printf("국민: 1  우리: 2  기업: 3  농협: 4  신한: 5   \n");
+	printf("하나: 6  씨티: 7  경남: 8  K뱅크: 9   SC: 10   \n\n");
+	printf("Number: ");
+
+	scanf("%d", &banknum);
+	printf("\n\n");
+	switch (banknum) { // use switch case to select the bank and calls the function
+	case 1: KB(&User); // send the address of the structure User(call by reference)
+		break;
+	case 2: Woori(&User);
+		break;
+	case 3: IBK(&User);
+		break;
+	case 4: NH(&User);
+		break;
+	case 5: SH(&User);
+		break;
+	case 6: KEB(&User);
+		break;
+	case 7: Citi(&User);
+		break;
+	case 8: KN(&User);
+		break;
+	case 9: Kbank(&User);
+		break;
+	case 10: SC(&User);
+		break;
+	default:
+		printf("Not Exist");
+	}
+
+
+
+
+	return 0;
+}
+// 복리 : S = 원금(1+이율)^기간 (a(1+r)^n)
+// 단리 : S = a(1+rn)
+// switch case 문 사용, 단리계산 함수 따로 구현 
+// 은행 함수 내에선 주의사항 출력해주기 
+// Wrong Input 바꿔주기

@@ -1,0 +1,28 @@
+#include<iostream>
+using namespace std;
+
+int arr[10] = { 1,1,2,5,6,9,9,15,16,19 };
+
+int main() {
+
+	int start = 0;
+	int end = 9;
+	int mid;
+	int target = 16;
+
+	while (1) {
+		mid = (start + end) / 2;
+		if (arr[mid] == target) break;
+		else if (target < arr[mid]) {
+			end = mid-1;
+		}
+		else {
+			start = mid+1;
+		}
+		
+	}
+
+	cout << mid;
+
+	return 0;
+}
